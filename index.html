@@ -38,9 +38,14 @@ h1{margin:0;font-size:clamp(31px,5.2vw,48px);line-height:1.05;letter-spacing:.01
   <style>
   /* Touch hygiene -- owner 2026-09-15: a child's drag became a blue text selection,
      and pinches zoomed the page. user-select and touch-callout stop the first;
-     touch-action: manipulation stops double-tap zoom without killing scroll. Pinch
-     itself needs the gesturestart guard below, because iOS ignores user-scalable=no. */
-  html { -webkit-text-size-adjust: 100%; }
+     touch-action: manipulation stops double-tap zoom without killing scroll. Pinch is never blocked: it is a zoomed-in child's only way back out (INTERACTION-DIRECTION.md).
+
+     2026-09-26, zoom fix C: manipulation is not the whole answer on its own. iPadOS
+     Safari still double-tap zooms with it in place (owner: "kids sometimes double tap,
+     and on ipad it's zoom in, then they cant zoom out"), so ./tap-zoom-guard.js, loaded
+     first in the body below, stops the second quick tap's zoom and re-delivers the tap.
+     The room pages carry the same rule and their own copy of that file. */
+  html { -webkit-text-size-adjust: 100%; touch-action: manipulation; }
   body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; touch-action: manipulation; }
   input, textarea, [contenteditable="true"] { -webkit-user-select: text; user-select: text; }
   </style>
@@ -60,6 +65,16 @@ h1{margin:0;font-size:clamp(31px,5.2vw,48px);line-height:1.05;letter-spacing:.01
     </a>
   </nav>
 </main>
+<!-- Zoom fix C (2026-09-25, owner: "pick the method that most likely to work well").
+     First, before the worker registration below. It stops the ZOOM of a second quick tap
+     and re-delivers that tap; a multi-finger pinch is never touched, so a child who is
+     zoomed in can always pinch back out. It is NOT a gesturestart handler and must never
+     become one -- a document-level pinch blocker is the banned pattern recorded in
+     INTERACTION-DIRECTION.md. Each room page carries its own byte-identical sibling copy,
+     because a room is published one directory shallower than it lives in the source tree;
+     see tools/room-page.py. -->
+<script src="./tap-zoom-guard.js"></script>
+
 <script>
 /* Register the worker from the front door only. Its scope is the directory this
    file sits in -- /animal-book/ once published -- so it covers the rooms below
@@ -73,12 +88,5 @@ if ("serviceWorker" in navigator) {
   });
 }
 </script>
-  <script>
-  /* Pinch-zoom guard. iOS Safari ignores user-scalable=no (since iOS 10), so this is
-     the only thing that stops two small hands zooming the page mid-play. gesturestart
-     fires once per pinch; preventing it cancels the zoom and touches nothing else.
-     Other browsers never fire it, so this is inert there. */
-  document.addEventListener("gesturestart", function (e) { e.preventDefault(); }, { passive: false });
-  </script>
   </body>
 </html>

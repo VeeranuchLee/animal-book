@@ -42,13 +42,25 @@
    scope is the whole of /animal-book/, so a child who enters by the front door has
    the rooms covered without regenerating those two pages. */
 
-const CACHE_NAME = "animal-book-v2";
+// v3 2026-09-22: zoom-trap fix -- the global gesturestart pinch blocker is
+//        gone estate-wide (INTERACTION-DIRECTION.md); this bump carries it.
+// v4 2026-09-26: zoom fix C (method C, owner-approved 2026-09-25) -- the shared
+//        ./tap-zoom-guard.js stops the second quick tap's zoom and re-delivers the
+//        tap, while a multi-finger pinch is never touched. It is listed here for the
+//        same reason ./index.html is: the front door is precached, so without it an
+//        offline install has no guard. Each room page's OWN copy (rooms/<room>/) is
+//        deliberately NOT listed -- rooms are not precached at all, for the two reasons
+//        in the header above, and a room's sibling guard is stored by the fetch handler
+//        the first time the room is opened. Do not add the clips or the bed, either.
+const CACHE_NAME = "animal-book-v4";
 
 /* The book's front door and the pictures it presents. Every one of these is in
-   .publish-manifest's [ship] section under index.html and assets/landing/**. */
+   .publish-manifest's [ship] section under index.html, tap-zoom-guard.js and
+   assets/landing/**. */
 const APP_FILES = [
   "./",
   "./index.html",
+  "./tap-zoom-guard.js",
   "./assets/landing/background.webp",
   "./assets/landing/rainforest.webp",
   "./assets/landing/home-and-pets.webp",
