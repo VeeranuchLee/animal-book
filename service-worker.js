@@ -52,7 +52,7 @@
 //        deliberately NOT listed -- rooms are not precached at all, for the two reasons
 //        in the header above, and a room's sibling guard is stored by the fetch handler
 //        the first time the room is opened. Do not add the clips or the bed, either.
-const CACHE_NAME = "animal-book-v4";
+const CACHE_NAME = "animal-book-v5";
 
 /* The book's front door and the pictures it presents. Every one of these is in
    .publish-manifest's [ship] section under index.html, tap-zoom-guard.js and
@@ -64,6 +64,12 @@ const APP_FILES = [
   "./assets/landing/background.webp",
   "./assets/landing/rainforest.webp",
   "./assets/landing/home-and-pets.webp",
+  // 2026-10-04: the Farm card picture (front door gained its third room). Listed here so
+  // an offline install shows the whole front door, same as the two above. CACHE_NAME is
+  // deliberately still v4 in this change: the bump is the release turn's one act, with
+  // the farm narration render, per the 2026-10-01 work-progress entry -- and publish-app.sh
+  // stage 5 refuses to ship anything until that bump happens anyway.
+  "./assets/landing/farm.webp",
 ];
 
 self.addEventListener("install", (event) => {
