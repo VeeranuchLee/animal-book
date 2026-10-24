@@ -52,7 +52,7 @@
 //        deliberately NOT listed -- rooms are not precached at all, for the two reasons
 //        in the header above, and a room's sibling guard is stored by the fetch handler
 //        the first time the room is opened. Do not add the clips or the bed, either.
-const CACHE_NAME = "animal-book-v6";
+const CACHE_NAME = "animal-book-v7";
 
 /* The book's front door and the pictures it presents. Every one of these is in
    .publish-manifest's [ship] section under index.html, tap-zoom-guard.js and

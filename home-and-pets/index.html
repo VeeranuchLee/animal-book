@@ -229,8 +229,8 @@ body.debug .name{outline:2px solid #35c8ff}
   <button class="name n-puppy" data-a="puppy" aria-label="Find out more about the puppy"><span><i>puppy</i></span></button>
   <button class="name n-guinea-pig" data-a="guinea-pig" aria-label="Find out more about the guinea pig"><span><i>guinea pig</i></span></button>
   <button class="name n-kitten" data-a="kitten" aria-label="Find out more about the kitten"><span><i>kitten</i></span></button>
-  <button class="sound" id="sound" aria-label="Turn the sound off"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg></button>
-  <a class="hubx" href="https://veeranuchlee.github.io/animal-book/" aria-label="Back to Our Animal Book" title="Back to Our Animal Book">←</a>
+  <button class="sound" id="sound" aria-label="Turn the sound off"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 5L6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <a class="hubx" href="https://veeranuchlee.github.io/animal-book/" aria-label="Back to Our Animal Book" title="Back to Our Animal Book"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   <div class="sheet" id="sheet"><div class="card" id="card" role="dialog" aria-modal="true"></div></div>
 </div>
 
@@ -348,14 +348,8 @@ function duck() {
   }, 200);
 }
 
-/* One room-style drawing replaces the platform-dependent speaker glyph. Muted keeps the
-   same cone and waves and adds a slash, so the state change is visible without colour. */
-const speakerMark = slash =>
-  '<svg viewBox="0 0 24 24" aria-hidden="true">' +
-  '<path d="M11 5 6 9H3v6h3l5 4V5z" fill="currentColor" stroke="none"/>' +
-  '<path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>' +
-  (slash ? '<path d="M4.5 19.5 19.5 4.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>' : '') +
-  '</svg>';
+/* Use the shared speaker drawings for both states. */
+const speakerMark = slash => slash ? "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M11 5L6 9H3v6h3l5 4z\" fill=\"currentColor\"/><path d=\"M16 9l5 6M21 9l-5 6\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>" : "<svg viewBox=\"0 0 24 24\" aria-hidden=\"true\" focusable=\"false\"><path d=\"M11 5L6 9H3v6h3l5 4z\" fill=\"currentColor\"/><path d=\"M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2.4\" stroke-linecap=\"round\" stroke-linejoin=\"round\"/></svg>";
 
 document.getElementById('sound').addEventListener('click', e => {
   sound = !sound;
