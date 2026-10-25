@@ -110,23 +110,13 @@ html,body{touch-action:manipulation}
 
 /* Sound. AUDIO-DIRECTION.md: every page keeps a Sound toggle. */
 
-/* The room returns to the book's chooser. It sits BESIDE the Sound toggle rather
-   than in the corner, because Sound already owns the corner and moving a control a
-   child has already learned costs more than it buys. The offset is measured in BOTH
-   rooms, not one: 7.1% looked clear in the rainforest
-   but sits under Home & pets's "pet" name box. 15% is the first offset that clears
-   every .tap, .gtap and .name box in both rooms with 1% to spare, so the gap after
-   Sound is the measurement, not a spacing choice. Everything here is
-   percentage-positioned, so a clearance that holds at one size holds at all of them.
-   Taking an animal's tap would be worse than having no way home.
+/* The room returns to the book's chooser with the suite-wide back control. Sound moves
+   to the opposite corner so the one remembered top-left target is never obstructed.
    Absolute URL on purpose: publishing restructures this file as
    /animal-book/home-and-pets/index.html, while the chooser is /animal-book/. Using its
    published absolute URL makes the destination unambiguous in local previews too. */
-.hubx{position:absolute;z-index:7;left:15.000%;top:0.737%;width:5.732%;height:7.643%;
-  display:grid;place-items:center;margin:0;padding:0;cursor:pointer;text-decoration:none;
-  border:2px solid #2d4a1c;border-radius:50%;background:#fffdf3d9;color:#2d4a1c;
-  font-size:calc(var(--fs)*1.15);line-height:1}
-.sound{position:absolute;z-index:7;left:0.552%;top:0.737%;width:5.732%;height:7.643%;
+.sound{position:fixed;z-index:1000;right:calc(16px + env(safe-area-inset-right, 0px));
+  top:calc(16px + env(safe-area-inset-top, 0px));width:56px;height:56px;
   display:grid;place-items:center;margin:0;padding:0;cursor:pointer;
   border:2px solid #2d4a1c;border-radius:50%;background:#fffdf3d9;color:#2d4a1c;
   font-size:calc(var(--fs)*1.15);-webkit-appearance:none}
@@ -203,6 +193,8 @@ body.debug .tap{background:#00ff5580;outline:2px solid #00ff55}
 body.debug .patch{outline:2px dashed #ff35d8}
 body.debug .name{outline:2px solid #35c8ff}
 </style>
+<link rel="stylesheet" href="/animal-book/cg-back.css">
+<script src="/animal-book/cg-update.js" defer></script>
 
 <div class="stage" id="stage">
 
@@ -230,7 +222,7 @@ body.debug .name{outline:2px solid #35c8ff}
   <button class="name n-guinea-pig" data-a="guinea-pig" aria-label="Find out more about the guinea pig"><span><i>guinea pig</i></span></button>
   <button class="name n-kitten" data-a="kitten" aria-label="Find out more about the kitten"><span><i>kitten</i></span></button>
   <button class="sound" id="sound" aria-label="Turn the sound off"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M11 5L6 9H3v6h3l5 4z" fill="currentColor"/><path d="M15.5 8.5a5 5 0 0 1 0 7M18.5 6a9 9 0 0 1 0 12" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-  <a class="hubx" href="https://veeranuchlee.github.io/animal-book/" aria-label="Back to Our Animal Book" title="Back to Our Animal Book"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+  <a class="cg-back" href="https://veeranuchlee.github.io/animal-book/" aria-label="Back to the rooms"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M15 5l-7 7 7 7" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
   <div class="sheet" id="sheet"><div class="card" id="card" role="dialog" aria-modal="true"></div></div>
 </div>
 
